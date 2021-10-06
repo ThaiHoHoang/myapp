@@ -1,19 +1,39 @@
+import {DrawingApp } from "./drawapp";
+
+
+let drawing = new DrawingApp();
+// drawing.clearCanvas();
+// drawing.draw(0,0,100,100);
+
 let lastTime = window.performance.now();
 var time = window.performance.now();
 var delta = time - lastTime;
+var x = 0;
+var y = 20;
+var z = 490;
+
 requestAnimationFrame(loop)
+
+
 function update(time: number,delta: number){
-    console.log(time);
-    console.log(delta);
+
 }
 function loop() {
-time = window.performance.now();
-delta = time - lastTime;
+drawing.clearCanvas();
+
 // processInput();
-update(time, delta);
+// update(time, delta);
 // render();
-lastTime = time;
-if (time<5000)
-var id = requestAnimationFrame(loop)
-console.log("Finish " + id.toString());
+
+drawing.draw(x,20,x,40);
+if (x<z) {
+    x++;
+}
+else {
+    x=0;
+}
+ 
+requestAnimationFrame(loop)
+console.log(x);
+console.log(y);
 }
