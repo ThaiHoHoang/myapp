@@ -3,8 +3,7 @@ export class DrawingApp {
     private context: CanvasRenderingContext2D;
     
     constructor() {
-        let canvas = document.getElementById('canvas') as
-                     HTMLCanvasElement;
+        let canvas = document.getElementById('canvas') as HTMLCanvasElement;
         let context = canvas.getContext("2d");
         context.lineCap = 'round';
         context.lineJoin = 'round';
@@ -21,7 +20,6 @@ export class DrawingApp {
         context.moveTo(x1,y1);
         context.lineTo(x2, y2);
         context.stroke();
-
         context.closePath();
     }
 
@@ -29,4 +27,15 @@ export class DrawingApp {
         this.context
             .clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
+}
+
+class Player {
+    private canvas: HTMLCanvasElement;
+    private context: CanvasRenderingContext2D;
+
+    constructor () {
+        let canvas = <HTMLCanvasElement> document.getElementById('canvas');
+        let context = canvas.getContext('2d');
+    }
+    
 }
