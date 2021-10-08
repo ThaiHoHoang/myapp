@@ -8,34 +8,31 @@ export class DrawingApp {
         context.lineCap = 'round';
         context.lineJoin = 'round';
         context.strokeStyle = 'red';
+        context.fillStyle = 'dark';
         context.lineWidth = 1;
     
         this.canvas = canvas;
         this.context = context;
     }
 
-    public draw(x1 : number, y1 : number , x2: number, y2: number) {
+    public drawBird(x1 : number, y1 : number) {
         let context = this.context;
-        context.beginPath();
-        context.moveTo(x1,y1);
-        context.lineTo(x2, y2);
-        context.stroke();
-        context.closePath();
+        var img = new Image();
+        img.src = './img/bird.png';
+        img.onload;
+        context.drawImage(img,x1,y1);
+        
+    }
+    public drawPice(x1 : number, y1 : number) {
+        let context = this.context;
+        var img = new Image();
+        img.src = './img/ongduoi.png';
+        img.onload;
+        context.drawImage(img,x1,y1);
+        
     }
 
     public clearCanvas() {
-        this.context
-            .clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
-}
-
-class Player {
-    private canvas: HTMLCanvasElement;
-    private context: CanvasRenderingContext2D;
-
-    constructor () {
-        let canvas = <HTMLCanvasElement> document.getElementById('canvas');
-        let context = canvas.getContext('2d');
-    }
-    
 }
