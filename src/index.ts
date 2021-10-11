@@ -21,10 +21,13 @@ window.onload = () => {
     drawPipe2 = new Pipe(x+500);
     drawBird = new Bird(ketThuc);
     document.addEventListener("keydown",onKeyDown);
-        function onKeyDown(this: HTMLCanvasElement, evt: KeyboardEvent) {
-            keypress = evt;
-        }
-    alert("Bắt đầu, bấm phím U để chơi");
+    function onKeyDown(this: HTMLCanvasElement, evt: KeyboardEvent) {
+      keypress = evt;
+    }
+    // switch (keypress.key) {
+    //   case "p": isEnd = false;
+    // }
+    
     gameloop();
     
     
@@ -38,28 +41,30 @@ function gameloop() {
         update();
         render();
         requestAnimationFrame(gameloop)
+        
     }
 }
 function processInput() {
     if ( keypress != null) {
         switch(keypress.key) {
             case "u": drawBird.birdInput(true);
+            console.log("Play");
         }
         keypress = null;
     }
 }
 
 function ketThuc() {
-    alert('Bạn đã thua. Điểm của bạn là: ' + score);
-    isEnd = true;
+  isEnd = true;
 }
 
 function render() {
    drawPipe.drawPipe();
    drawPipe2.drawPipe();
    drawBird.drawBird();
+   countScore();
    ctx.font = '20px Arial';
-   ctx.fillText('SCORE: '+ score,30,30,300);
+   ctx.fillText('SCORE: '+ score,50,30,300);
 
 }
 function update() {
@@ -73,13 +78,20 @@ function update() {
     drawPipe2.update();
     drawPipe.update();
     drawBird.update();
-    countScore();
+    
     
 }
 function countScore() {  
     if (isEnd == false) {
       score++;
     }
+    else {
+      ctx.font = "200 Arial";
+      ctx.fillText('YOUR SCORE: '+ score,400,250)
+    }
+}
+function name() {
+  
 }
 
 function checkColision(bird:Bird, pipe: Pipe): boolean {
