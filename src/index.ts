@@ -1,81 +1,175 @@
 import {DrawingApp } from "./drawapp";
-import { DrawPipe} from "./pipe"
+import { Pipe} from "./pipe";
+import {Bird} from "./bird";
 
 var canvas : HTMLCanvasElement;
 var ctx : CanvasRenderingContext2D;
-var event: KeyboardEvent;
 let y: number;
 let x: number;
-let g: number;
 let drawing = new DrawingApp;
-let drawPipe: DrawPipe;
-let drawPipe2: DrawPipe;
-let isJump = false;
-let count = 0;
-
-function gameloop() {
-    drawing.clearCanvas();
-    ctx.fillStyle = '#8FBC8F';
-    ctx.fillRect(0,0,2000,5000);
-    drawing.drawBackGround(0,0,canvas.width,canvas.height);
-    processInput();
-    update();
-    render();
-    requestAnimationFrame(gameloop)
-}
+let drawPipe: Pipe;
+let drawPipe2: Pipe;
+let drawBird: Bird;
+let keypress: KeyboardEvent;
+let isEnd = false;
+let score = 0;
 window.onload = () => {
     canvas = document.getElementById('canvas') as HTMLCanvasElement;
     ctx = canvas.getContext('2d');
-    y = 0;
     x = canvas.width;
-    g = 1;
-    drawPipe = new DrawPipe(x);
-    drawPipe2 = new DrawPipe(x+500);
+    drawPipe = new Pipe(x);
+    drawPipe2 = new Pipe(x+500);
+    drawBird = new Bird(ketThuc);
     document.addEventListener("keydown",onKeyDown);
-    gameloop();
-}
-
-function onKeyDown(this: HTMLCanvasElement, evt: KeyboardEvent) {
-    console.log("Received event!");
-    event = evt;
-}
-
-function processInput() {
-    if (event != null) {
-        switch(event.key){
-            case "u":
-                isJump = true;
+        function onKeyDown(this: HTMLCanvasElement, evt: KeyboardEvent) {
+            keypress = evt;
         }
-        event = null;
+    alert("Bắt đầu, bấm phím U để chơi");
+    gameloop();
+    
+    
+}
+function gameloop() {
+    
+    if (!isEnd){
+        drawing.clearCanvas();
+        drawing.drawBackGround(0,0,canvas.width,canvas.height);
+        processInput();
+        update();
+        render();
+        requestAnimationFrame(gameloop)
     }
+}
+function processInput() {
+    if ( keypress != null) {
+        switch(keypress.key) {
+            case "u": drawBird.birdInput(true);
+        }
+        keypress = null;
+    }
+}
+
+function ketThuc() {
+    alert('Bạn đã thua. Điểm của bạn là: ' + score);
+    isEnd = true;
 }
 
 function render() {
    drawPipe.drawPipe();
-    drawPipe2.drawPipe();
-    drawing.drawBird(50,y, 60,50);
+   drawPipe2.drawPipe();
+   drawBird.drawBird();
+   ctx.font = '20px Arial';
+   ctx.fillText('SCORE: '+ score,30,30,300);
+
 }
 function update() {
+    let isColision = checkColision(drawBird, drawPipe)
+        || checkColisionUp(drawBird, drawPipe)
+        || checkColision(drawBird, drawPipe2)
+        || checkColisionUp(drawBird, drawPipe2);
+    if (isColision){
+        ketThuc();
+    }
     drawPipe2.update();
     drawPipe.update();
-    if(y<=canvas.height ) {
-        
-        if (isJump == true) {
-            if (count < 10) {
-                console.log("Bird jumped! count: " + count.toString());
-                y -= g*7;
-                count++;
-            }
-            else {
-                count = 0;
-                isJump = false;
-            }
-        }
-        else {
-            y += g*5;
-        }
+    drawBird.update();
+    countScore();
+    
+}
+function countScore() {  
+    if (isEnd == false) {
+      score++;
     }
-    else {
-        y = 0;
+}
+
+function checkColision(bird:Bird, pipe: Pipe): boolean {
+    let left_pipeird = bird.x;
+    let right_pipeird = bird.x + 50;
+    let top_pipeird = bird.y;
+    let bottom_pipeird = bird.y + 50;
+   
+    let left_pipe = pipe.x;
+    let right_pipe = pipe.x + 60;
+    let top_pipe = pipe.y;
+    let bottom_pipe = pipe.y + 500;
+   
+    if (left_pipeird > left_pipe && left_pipeird < right_pipe)
+    {
+      if (top_pipeird > top_pipe && top_pipeird < bottom_pipe)
+      {
+        return true;
+      }
     }
+   
+    if (left_pipeird > left_pipe && left_pipeird < right_pipe)
+    {
+      if (bottom_pipeird > top_pipe && bottom_pipeird < bottom_pipe)
+      {
+        return true;
+      }
+    }
+   
+    if (right_pipeird > left_pipe && right_pipeird < right_pipe)
+    {
+      if (top_pipeird > top_pipe && top_pipeird < bottom_pipe)
+      {
+        return true;
+      }
+    }
+   
+    if (right_pipeird > left_pipe && right_pipeird < right_pipe)
+    {
+      if (bottom_pipeird > top_pipe && bottom_pipeird < bottom_pipe)
+      {
+        return true;
+      }
+    }
+   
+    return false;
+}
+
+function checkColisionUp(bird:Bird, pipe: Pipe) {
+    let left_pipeird = bird.x;
+    let right_pipeird = bird.x + 50;
+    let top_pipeird = bird.y;
+    let bottom_pipeird = bird.y + 50;
+   
+    let left_pipe = pipe.x;
+    let right_pipe = pipe.x + 60;
+    let top_pipe = pipe.y - 630;
+    let bottom_pipe = pipe.y + 500 - 630;
+   
+    if (left_pipeird > left_pipe && left_pipeird < right_pipe)
+    {
+      if (top_pipeird > top_pipe && top_pipeird < bottom_pipe)
+      {
+        return true;
+      }
+    }
+   
+    if (left_pipeird > left_pipe && left_pipeird < right_pipe)
+    {
+      if (bottom_pipeird > top_pipe && bottom_pipeird < bottom_pipe)
+      {
+        return true;
+      }
+    }
+   
+    if (right_pipeird > left_pipe && right_pipeird < right_pipe)
+    {
+      if (top_pipeird > top_pipe && top_pipeird < bottom_pipe)
+      {
+        return true;
+      }
+    }
+   
+    if (right_pipeird > left_pipe && right_pipeird < right_pipe)
+    {
+      if (bottom_pipeird > top_pipe && bottom_pipeird < bottom_pipe)
+      {
+        return true;
+      }
+    }
+   
+    return false;
 }
