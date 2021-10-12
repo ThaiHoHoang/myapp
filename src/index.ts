@@ -24,9 +24,6 @@ window.onload = () => {
     function onKeyDown(this: HTMLCanvasElement, evt: KeyboardEvent) {
       keypress = evt;
     }
-    // switch (keypress.key) {
-    //   case "p": isEnd = false;
-    // }
     
     gameloop();
     
