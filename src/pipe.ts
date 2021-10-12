@@ -24,13 +24,13 @@ export class  Pipe {
     private drawPipeBot() {
         let context = this.context;
         var img = new Image();
-        img.src = '../src/img/ongduoi.png';
+        img.src = './src/img/ongduoi.png';
         context.drawImage(img,this.x,this.y,60,500);
     }
     private drawPipeTop() {
         let context = this.context;
         var img = new Image();
-        img.src = '../src/img/ongtren.png';
+        img.src = './src/img/ongtren.png';
         context.drawImage(img,this.x,this.y - 630,60,500);
     }
     public drawPipe() {

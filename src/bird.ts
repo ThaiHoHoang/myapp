@@ -23,7 +23,7 @@ export class Bird {
     public drawBird() {
         let context = this.context;
         var img = new Image();
-        img.src = '../src/img/bird.png';
+        img.src = './src/img/bird.png';
         context.drawImage(img,this.x,this.y,50,50);
     }
     public update() {

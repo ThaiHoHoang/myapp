@@ -12,7 +12,7 @@ export class DrawingApp {
     public drawBackGround(x1 : number, y1 : number, w : number, h : number) {
         let context = this.context;
         var img = new Image();
-        img.src = '../src/img/nenchinh.png';
+        img.src = './src/img/nenchinh.png';
         context.drawImage(img,x1,y1,w,h);
         
     }
