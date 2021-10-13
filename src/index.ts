@@ -13,6 +13,7 @@ let drawBird: Bird;
 let keypress: KeyboardEvent;
 let isEnd = false;
 let score = 0;
+alert (" Press 'U' to play game" );
 window.onload = () => {
     canvas = document.getElementById('canvas') as HTMLCanvasElement;
     ctx = canvas.getContext('2d');
@@ -86,9 +87,6 @@ function countScore() {
       ctx.font = "200 Arial";
       ctx.fillText('YOUR SCORE: '+ score,400,250)
     }
-}
-function name() {
-  
 }
 
 function checkColision(bird:Bird, pipe: Pipe): boolean {
